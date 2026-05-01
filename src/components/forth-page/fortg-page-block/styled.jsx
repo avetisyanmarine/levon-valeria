@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ForthPageBlockPart = styled.div`
     text-align: center;
+    margin-top: 50px;
     h2 {
         margin: 40px 0;
     }
@@ -12,7 +13,7 @@ export const ForthPageBlockPart = styled.div`
         border-radius: 15px;
     }
     h3 {
-        margin: 10px 0;
+        margin: 30px 0;
     }
     iframe {
         width: 100%;

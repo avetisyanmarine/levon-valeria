@@ -10,22 +10,24 @@ const ThirdPagePart = styled.div`
 const ThirdPagePartContext = styled.div`
   overflow: hidden;
   text-align: center;
+  text-align: left;
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  p {
+    color: #534d4d;
+    font-size: 14px;
+  }
+  h4 {
+    font-weight: 600;
+  }
 `;
 const ThirdPagePartMini = styled.div`
-  text-align: center;
-  h3 {
-    letter-spacing: 9px;
-    font-weight: 200;
-    font-size: 18px;
-    margin: 30px 0;
-    &:nth-child(1) {
-      margin-top: 100px;
-    }
-  }
   hr {
     width: 195px;
-    margin: auto;
-    background: #1E1E1E;
+    margin: 50px auto 0;
+    background: #292929;
     border: 0;
     height: 2px;
     border-radius: 50px;

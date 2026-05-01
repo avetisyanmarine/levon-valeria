@@ -5,10 +5,8 @@ const LastFooterPagePart = styled.div`
     text-align: center;
 `
 const LastFooterPagePartContext = styled.div`
-    font-size: 18px;
-    > p {
-        margin-top: 48px;
-    }
+    font-size: 20px;
+    
     div {
         display: flex;
         justify-content: center;
@@ -16,7 +14,6 @@ const LastFooterPagePartContext = styled.div`
         gap: 10px;
         div {
             img {
-                padding: 11px;
                 border-right: 2px solid aliceblue;
                 /* border-radius: 50px; */
             }

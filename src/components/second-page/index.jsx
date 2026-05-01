@@ -1,11 +1,17 @@
 import { SecondPagePart, GridDiv } from "./styled";
 import { Container, Flexible } from "../../GlobalStyle";
 import { useEffect, useState } from "react";
-import Photo2 from "../../assets/image/photo2.jpg";
+import Photo2 from "../../assets/image/savethedate.png";
+import BlockImage from "../../assets/image/blockimage.jpg";
+import PhotoF1 from "../../assets/image/photof1.jpg";
+import PhotoGroup1 from "../../assets/image/groupphoto1.jpg";
+import PhotoGroup2 from "../../assets/image/groupphoto2.jpg";
+import PhotoGroup3 from "../../assets/image/groupphoto3.jpg";
+import LineAes from "../../assets/image/lineaes.png";
 import { ThirdPagePartCalendar } from "../third-page/styled";
 
 export const SecondPage = () => {
-  const weddingDate = new Date(2026, 2, 1, 0, 0, 0);
+  const weddingDate = new Date(2026, 5, 5, 0, 0, 0);
 
   const calculateTimeLeft = () => {
     const now = new Date();
@@ -39,15 +45,11 @@ export const SecondPage = () => {
     <SecondPagePart className="my-10">
       <Container>
         <div>
-          <h2 className="mb-10" data-aos="zoom-in" data-aos-offset="400">
-            Միջոցառմանը մնաց
+          <h2 className="mb-10" data-aos="zoom-in">
+            Հարսանիքին մնաց
           </h2>
           <GridDiv>
-            <Flexible
-              data-aos="flip-up"
-              data-aos-duration="900"
-              data-aos-delay="300"
-            >
+            <Flexible data-aos="flip-up">
               <h2>{formatNumber(timeLeft.days)}</h2>
               <p>Օր</p>
             </Flexible>
@@ -78,12 +80,47 @@ export const SecondPage = () => {
             </Flexible>
           </GridDiv>
         </div>
-        <h2 className="mt-10" data-aos="zoom-in" data-aos-offset="400">
-          Մարտ
+
+        <div
+          className="bg-[#ffffff] rounded-[15px] w-[271px] h-[358px] mt-[50px] mx-auto drop-shadow-2xl flex flex-col items-center justify-center gap-4 p-4"
+          data-aos="fade-up"
+          data-aos-duration="600"
+        >
+          <img src={BlockImage} className="mt-[6px] grayscale" alt="" />
+          <p className="font-[600]">
+            Սերը հանդուրժող է, <br />
+            սերը բարի է<p className="mt-4">— Ա Կորնթացիներ 13:4</p>
+          </p>
+        </div>
+      </Container>
+      <Container>
+        <div className="flex h-[100vh] my-11 gap-[20px]">
+          <div>
+            <img src={Photo2} className="h-[100vh]" />
+          </div>
+          <div className="flex flex-col gap-2 grayscale">
+            <img src={PhotoGroup1} alt="" className="h-1/3 object-cover" />
+            <img src={PhotoGroup2} alt="" className="h-1/3 object-cover" />
+            <img src={PhotoGroup3} alt="" className="h-1/3 object-cover" />
+          </div>
+        </div>
+        <div className="mt-10 mb-7">
+          <h2 className="mb-10">Սիրելի հյուրեր</h2>
+          <Flexible className="font-[600]">
+            <p>
+              Սիրով հրավիրում ենք Ձեզ ներկա գտնվելու մեր հարսանյաց հանդիսությանը
+              և կիսելու մեր ուրախությունը։
+            </p>
+          </Flexible>
+        </div>
+      </Container>
+      <img src={LineAes} alt="" className="w-full" />
+      <Container>
+        <h2 className="mt-5" data-aos="zoom-in">
+          Հունիս
         </h2>
         <ThirdPagePartCalendar
           data-aos="fade-up"
-          data-aos-offset="400"
           data-aos-duration="600"
           data-aos-delay="300"
           className="mt-15"
@@ -97,36 +134,15 @@ export const SecondPage = () => {
             </div>
           ))}
           {[...Array(37)].map((_, i) =>
-            i > 5 && i <= 36 ? (
-              <div className={i - 5 == 1 ? "special" : ""}>{i - 5}</div>
+            i > -1 && i <= 29 ? (
+              <div className={i + 1 == 5 ? "special" : ""}>{i + 1}</div>
             ) : (
               <div className=""></div>
             ),
           )}
         </ThirdPagePartCalendar>
+        <img src={PhotoF1} alt="" className="grayscale rounded-[15px] mt-[50px]" />
       </Container>
-      <div className="mt-10 mb-15">
-        <h2
-          className="mb-10"
-          data-aos="fade-up"
-          data-aos-offset="400"
-          data-aos-anchor-placement="top-bottom"
-          data-aos-duration="600"
-          data-aos-delay="300"
-        >
-          Սիրելի հյուրեր
-        </h2>
-        <Flexible className="w-full h-[147px] bg-white/45 px-4 font-[600]">
-          <p>
-            Սիրով հրավիրում ենք Ձեզ ներկա գտնվելու մեր հարսանյաց հանդիսությանը և
-            կիսելու մեր ուրախությունը։
-          </p>
-        </Flexible>
-      </div>
-      <img
-        src={Photo2}
-        className="w-full grayscale contrast-125 brightness-105"
-      />
     </SecondPagePart>
   );
 };

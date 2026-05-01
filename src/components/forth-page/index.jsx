@@ -1,10 +1,10 @@
 import { Container, Flexible } from "../../GlobalStyle";
 import { ForthPageBlock } from "./fortg-page-block";
 import { ForthPagePart, ForthPagePartContext } from "./styled";
-import Church from "../../assets/image/gayane.jpg";
+import Church from "../../assets/image/church.jpg";
 import Restaurant from "../../assets/image/restaurant.jpg";
-import Photo3 from "../../assets/image/photo3.jpg";
-import Bant from "../../assets/image/bant.png";
+import HeartLine from "../../assets/image/heartline.png";
+import Photo3 from "../../assets/image/examp2.jpg";
 
 export const ForthPage = () => {
   return (
@@ -13,53 +13,38 @@ export const ForthPage = () => {
         <ForthPagePartContext>
           <ForthPageBlock
             ImageSrc={Church}
-            bigText={"Սուրբ Գայանե եկեղեցի"}
-            mapSrc={"https://maps.app.goo.gl/VyLXsTENTBxsTU987"}
+            bigText={"Սուրբ Հովհաննես եկեղեցի"}
+            mapSrc={"https://maps.app.goo.gl/RaFzGUvf96Fs1yqm9"}
           />
           <ForthPageBlock
             ImageSrc={Restaurant}
-            bigText={"Նոր Դվին Ռեստորանային Համալիր"}
-            mapSrc={"https://maps.app.goo.gl/35zzYY99W9wpDqpM7"}
+            bigText={"Safari Hall"}
+            mapSrc={"https://maps.app.goo.gl/X9JVv4gQRdZYDaGK8"}
           />
         </ForthPagePartContext>
+        <div className="relative mt-10">
+          <img
+            src={Photo3}
+            alt="Restaurant"
+            className="w-full rounded-[15px] grayscale contrast-125 brightness-105"
+          />
+        </div>
       </Container>
-      <div className="relative">
-        <img
-          src={Photo3}
-          alt="Restaurant"
-          className="w-full my-10 mt-23 grayscale contrast-125 brightness-105"
-        />
-        <h1
-          style={{
-            fontFamily: "SaveTheDate", // Այստեղ համոզվեք, որ տառատեսակի անունը ճիշտ է
-            textAlign: "center",
-            color: "#1e1e1e",
-            fontSize: "2rem", // սա text-4xl-ն է
-            fontWeight: "600", // սա font-bold-ն է
-            marginTop: "2.5rem", // սա mt-10-ն է
-            position: "absolute", // սա absolute-ն է
-            top: "-36px",
-            left: "50%",
-            transform: "translateX(-50%)", // սա -translate-x-1/2-ն է
-          }}
-        >
-          Save the Date
-        </h1>
-      </div>
 
       <div className="text-center my-14">
         <h2>Դետալներ</h2>
-        <Flexible className="relative">
-          <img src={Bant} className="mx-auto my-8 grayscale" />
-          <Flexible className="absolute w-full h-[322px] bg-white/45 font-[600] px-20">
-            Ձեզ հետ բերեք ՍԵՐ, ժպիտներ ու անսահման դրական էմոցիաներ. ինչպես նաև
-            հարմարավետ կոշիկներ` պարելու համար:
-            <br />
-            <br />
-            Հարսի պարի և հրավառության ընթացքում կխնդրենք ծնողներին ուշադիր լինել
-            իրենց բալիկների նկատմամբ:
-          </Flexible>
+        <img src={HeartLine} className="mx-auto my-8 w-[300px]" />
+        <Flexible
+          className=" font-[600] px-5"
+          data-aos="fade-up"
+          data-aos-duration="600"
+        >
+          Ձեզ հետ բերեք ՍԵՐ, ժպիտներ ու անսահման դրական էմոցիաներ. ինչպես նաև
+          հարմարավետ կոշիկներ` պարելու համար:
+          <br />
+          
         </Flexible>
+        <hr className="mx-auto my-8 w-[300px]" />
       </div>
     </ForthPagePart>
   );
