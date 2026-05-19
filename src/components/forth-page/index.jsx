@@ -5,6 +5,16 @@ import Church from "../../assets/image/church.jpg";
 import Restaurant from "../../assets/image/restaurant.jpg";
 import HeartLine from "../../assets/image/heartline.png";
 import AttendanceGuests from "../AttendanceGuests/index";
+import Color1 from "../../assets/image/colors/color1.jpg";
+import Color2 from "../../assets/image/colors/color2.jpg";
+import Color3 from "../../assets/image/colors/color3.jpg";
+import Color4 from "../../assets/image/colors/color4.jpg";
+import Color5 from "../../assets/image/colors/color5.jpg";
+import Color6 from "../../assets/image/colors/color6.jpg";
+import Color7 from "../../assets/image/colors/color7.jpg";
+import Color8 from "../../assets/image/colors/color8.jpg";
+import Color9 from "../../assets/image/colors/color9.jpg";
+import Color10 from "../../assets/image/colors/color10.jpg";
 
 export const ForthPage = () => {
   return (
@@ -50,6 +60,34 @@ export const ForthPage = () => {
         <hr className="mx-auto my-8 w-[300px]" />
       </div>
       <Container>
+        <h2 className="text-center">Dress Code</h2>
+
+        <div className="flex flex-wrap justify-center gap-5 mt-10">
+          {[
+            Color1,
+            Color2,
+            Color3,
+            Color4,
+            Color5,
+            Color6,
+            Color7,
+            Color8,
+            Color9,
+            Color10,
+          ].map((color, index) => (
+            <div
+              key={index}
+              className="w-[70px] h-[70px] rounded-full overflow-hidden border-2 border-white shadow-lg"
+            >
+              <img
+                src={color}
+                alt={`color-${index}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
         <AttendanceGuests />
       </Container>
     </ForthPagePart>
