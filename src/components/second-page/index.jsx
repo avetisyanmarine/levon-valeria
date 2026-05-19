@@ -87,7 +87,7 @@ export const SecondPage = () => {
           data-aos-duration="600"
         >
           <img src={BlockImage} className="mt-[6px] grayscale" alt="" />
-          <p className="font-[600] text-[22px] font-[cursive] text-center">
+          <p className="font-[600] text-[22px] text-center">
             Ціле життя плюс <br /> ціла вічність{" "}
           </p>
         </div>
@@ -104,10 +104,10 @@ export const SecondPage = () => {
           </div>
         </div>
         <div className="mt-10 mb-7 ">
-          <h2 style={{ fontSize: "49px" }} className="font-[cursive] mb-5" data-aos="zoom-in">
+          <h2 style={{ fontSize: "49px" }} className="mb-5" data-aos="zoom-in">
             Любі гості
           </h2>
-          <Flexible className="font-[600] font-[cursive]">
+          <Flexible className="font-[600]">
             <p className="text-[20px]">
               Ми з любов’ю запрошуємо Вас бути присутніми на нашому весільному
               святі та розділити з нами нашу радість.
