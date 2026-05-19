@@ -20,7 +20,6 @@ import {
   FooterText,
   OptionIcon,
   OptionLabel,
-  OptionLabelMobile,
 } from "./styled";
 
 const AttendanceGuests = () => {
@@ -28,17 +27,22 @@ const AttendanceGuests = () => {
     fullName: "",
     familySide: null,
     attending: null,
-    guestCount: null,
+    guestCount: "",
     comment: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
+  const [message, setMessage] = useState({ type: "", text: "", ukText: "" });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "guestCount" ? Math.max(0, parseInt(value) || 0) : value,
+      [name]:
+        name === "guestCount"
+          ? value === ""
+            ? ""
+            : Math.max(0, parseInt(value) || 0)
+          : value,
     }));
   };
 
@@ -46,6 +50,7 @@ const AttendanceGuests = () => {
     setFormData((prev) => ({
       ...prev,
       attending: value,
+      guestCount: value ? "" : 0,
     }));
   };
 
@@ -58,12 +63,13 @@ const AttendanceGuests = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage({ type: "", text: "" });
+    setMessage({ type: "", text: "", ukText: "" });
 
     if (!formData.fullName.trim()) {
       setMessage({
         type: "error",
         text: "Խնդրում ենք մուտքագրել ձեր ամբողջական անունն ու ազգանունը։",
+        ukText: "Будь ласка, введіть ваше повне ім'я та прізвище.",
       });
       return;
     }
@@ -71,7 +77,8 @@ const AttendanceGuests = () => {
     if (formData.familySide === null) {
       setMessage({
         type: "error",
-        text: "Խնդրում ենք նշել՝ ո՞ր կողմից եք։",
+        text: "Խնդրում ենք նշել՝ ո՞ր կողմից եք հրավիրված։",
+        ukText: "Будь ласка, вкажіть, з чиєї ви сторони.",
       });
       return;
     }
@@ -80,14 +87,19 @@ const AttendanceGuests = () => {
       setMessage({
         type: "error",
         text: "Խնդրում ենք նշել՝ արդյոք մասնակցում եք։",
+        ukText: "Будь ласка, вкажіть, чи будете ви присутні.",
       });
       return;
     }
 
-    if (formData.attending && formData.guestCount == 0) {
+    if (
+      formData.attending &&
+      (formData.guestCount === "" || formData.guestCount <= 0)
+    ) {
       setMessage({
         type: "error",
-        text: "Խնդրում ենք մուտքագրել հյուրերի քանակը։",
+        text: "Խնդրում ենք մուտքագրել հյուրերի վավեր քանակ (նվազագույնը 1)։",
+        ukText: "Будь ласка, введіть коректну кількість гостей (мінімум 1).",
       });
       return;
     }
@@ -106,7 +118,7 @@ const AttendanceGuests = () => {
           body: new URLSearchParams({
             fullName: formData.fullName,
             familySide: formData.familySide,
-            attending: formData.attending,
+            attending: formData.attending ? "Այո / Так" : "Ոչ / Ні",
             guestCount: formData.attending ? formData.guestCount : 0,
             comment: formData.comment || "",
           }).toString(),
@@ -116,12 +128,13 @@ const AttendanceGuests = () => {
       setMessage({
         type: "success",
         text: "Շնորհակալություն։ Ձեր պատասխանը հաջողությամբ ուղարկվեց։",
+        ukText: "Дякуємо! Ваша відповідь успішно відправлена.",
       });
       setFormData({
         fullName: "",
         familySide: null,
         attending: null,
-        guestCount: null,
+        guestCount: "",
         comment: "",
       });
       window.scrollTo({
@@ -132,7 +145,8 @@ const AttendanceGuests = () => {
       console.error("Սխալ:", err);
       setMessage({
         type: "error",
-        text: "Տեղի է ունեցել սխալ, խնդրում ենք փորձել կրկին:",
+        text: "Տեղի է ունեցել սխալ, խնդրում ենք փորձել կրկին։",
+        ukText: "Сталася помилка, будь ласка, спробуйте ще раз.",
       });
     } finally {
       setIsSubmitting(false);
@@ -140,20 +154,62 @@ const AttendanceGuests = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper style={{ maxWidth: "100%", padding: "12px" }}>
       {/* Header */}
-      <Header>
-        <h3>Հրավերի պատասխան</h3>
-        <p>Խնդրում ենք հաստատել Ձեր մասնակցությունը</p>
+      <Header style={{ textAlign: "center", marginBottom: "24px" }}>
+        <h3 style={{ margin: "0 0 4px 0", fontSize: "1.4em" }}>
+          Հրավերի պատասխան
+        </h3>
+        <p
+          style={{
+            fontStyle: "italic",
+            fontSize: "0.9em",
+            opacity: 0.7,
+            margin: "0 0 16px 0",
+          }}
+        >
+          Відповідь на запрошення
+        </p>
+        <p style={{ margin: "0 0 4px 0", fontSize: "1.05em" }}>
+          Խնդրում ենք հաստատել Ձեր մասնակցությունը
+        </p>
+        <p
+          style={{
+            fontStyle: "italic",
+            fontSize: "0.85em",
+            opacity: 0.65,
+            margin: "0",
+          }}
+        >
+          Будь ласка, підтвердіть свою присутність
+        </p>
       </Header>
 
       {message.text && (
-        <MessageBox type={message.type}>
+        <MessageBox
+          type={message.type}
+          style={{ margin: "16px 0", padding: "12px" }}
+        >
           <MessageIcon type={message.type}>
             {message.type === "success" ? "✓" : "⚠"}
           </MessageIcon>
-          <MessageContent>
-            <p>{message.text}</p>
+          <MessageContent
+            style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+          >
+            <p style={{ margin: "0", fontSize: "0.95em", lineHeight: "1.4" }}>
+              {message.text}
+            </p>
+            <p
+              style={{
+                fontStyle: "italic",
+                fontSize: "0.85em",
+                opacity: 0.85,
+                margin: "0",
+                lineHeight: "1.4",
+              }}
+            >
+              {message.ukText}
+            </p>
           </MessageContent>
         </MessageBox>
       )}
@@ -161,9 +217,29 @@ const AttendanceGuests = () => {
       {/* Form */}
       <Form onSubmit={handleSubmit}>
         {/* Full Name Input */}
-        <FormGroup>
-          <Label htmlFor="fullName">
-            <h4>Անուն Ազգանուն*</h4>
+        <FormGroup
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+            marginBottom: "20px",
+          }}
+        >
+          <Label
+            htmlFor="fullName"
+            style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+          >
+            <h4 style={{ margin: "0", fontSize: "1.1em" }}>Անուն Ազգանուն*</h4>
+            <span
+              style={{
+                fontStyle: "italic",
+                fontSize: "0.85em",
+                fontWeight: "normal",
+                opacity: 0.65,
+              }}
+            >
+              Ім'я та Прізвище*
+            </span>
           </Label>
           <Input
             type="text"
@@ -171,58 +247,177 @@ const AttendanceGuests = () => {
             name="fullName"
             value={formData.fullName}
             onChange={handleInputChange}
-            placeholder="Մուտքագրեք ձեր ամբողջական անունն ու ազգանունը։"
+            placeholder="Մուտքագրեք այստեղ / Введіть тут"
             required
+            style={{ width: "100%", padding: "12px" }}
           />
         </FormGroup>
 
         {/* Family Side */}
-        <FormGroup>
-          <Label>
-            <h4>Ու՞մ կողմից եք հրավիրված*</h4>
+        <FormGroup
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            marginBottom: "20px",
+          }}
+        >
+          <Label
+            style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+          >
+            <h4 style={{ margin: "0", fontSize: "1.1em" }}>
+              Ու՞մ կողմից եք հրավիրված*
+            </h4>
+            <span
+              style={{
+                fontStyle: "italic",
+                fontSize: "0.85em",
+                fontWeight: "normal",
+                opacity: 0.65,
+              }}
+            >
+              З чиєї сторони ви запрошені?*
+            </span>
           </Label>
-          <OptionGrid>
+          <OptionGrid style={{ gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             {[
-              { value: "Հարսի կողմից", label: "Հարսի կողմից" },
-              { value: "Փեսայի կողմից", label: "Փեսայի կողմից" },
+              {
+                value: "Հարսի կողմից",
+                label: "Հարսի կողմից",
+                ukLabel: "Зі сторони нареченої",
+              },
+              {
+                value: "Փեսայի կողմից",
+                label: "Փեսայի կողմից",
+                ukLabel: "Зі сторони нареченого",
+              },
             ].map((option) => (
               <OptionButton
                 key={option.value}
                 type="button"
                 selected={formData.familySide === option.value}
                 onClick={() => handleFamilySideChange(option.value)}
+                style={{ height: "auto", padding: "12px 6px" }}
               >
-                <OptionIcon>{option.icon}</OptionIcon>
-                <OptionLabel>{option.label}</OptionLabel>
-                <OptionLabelMobile>
-                  {option.label.split(",")[0]}
-                </OptionLabelMobile>
+                {/* Տեքստերը դրված են մեկ միասնական OptionLabel-ի մեջ, որպեսզի սթայլերը չթաքցնեն ուկրաիներենը */}
+                <OptionLabel
+                  style={{
+                    display: "block",
+                    whiteSpace: "normal",
+                    textAlign: "center",
+                    width: "100%",
+                    fontSize: "0.95em",
+                    lineHeight: "1.3",
+                    margin: 0,
+                  }}
+                >
+                  {option.label}
+                  <br />
+                  <span
+                    style={{
+                      fontStyle: "italic",
+                      fontSize: "0.8em",
+                      opacity: 0.75,
+                      display: "block",
+                      marginTop: "4px",
+                      fontWeight: "normal",
+                    }}
+                  >
+                    {option.ukLabel}
+                  </span>
+                </OptionLabel>
               </OptionButton>
             ))}
           </OptionGrid>
         </FormGroup>
 
         {/* Attending Options */}
-        <FormGroup>
-          <Label>
-            <h4>Մասնակցու՞մ եք*</h4>
+        <FormGroup
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            marginBottom: "20px",
+          }}
+        >
+          <Label
+            style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+          >
+            <h4 style={{ margin: "0", fontSize: "1.1em" }}>Մասնակցու՞մ եք*</h4>
+            <span
+              style={{
+                fontStyle: "italic",
+                fontSize: "0.85em",
+                fontWeight: "normal",
+                opacity: 0.65,
+              }}
+            >
+              Чи будете ви присутні?*
+            </span>
           </Label>
-          <OptionGrid>
+          <OptionGrid style={{ gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             {[
-              { value: true, label: "Այո, կմասնակցեմ", icon: "✓" },
-              { value: false, label: "Ոչ, չեմ մասնակցի", icon: "✗" },
+              {
+                value: true,
+                label: "Այո, կմասնակցեմ",
+                ukLabel: "Так, буду",
+                icon: "✓",
+              },
+              {
+                value: false,
+                label: "Ոչ, չեմ մասնակցի",
+                ukLabel: "Ні, не зможу",
+                icon: "✗",
+              },
             ].map((option) => (
               <OptionButton
                 key={option.value}
                 type="button"
                 selected={formData.attending === option.value}
                 onClick={() => handleAttendingChange(option.value)}
+                style={{ height: "auto", padding: "12px 6px" }}
               >
-                <OptionIcon>{option.icon}</OptionIcon>
-                <OptionLabel>{option.label}</OptionLabel>
-                <OptionLabelMobile>
-                  {option.label.split(",")[0]}
-                </OptionLabelMobile>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <OptionIcon
+                    style={{ margin: "0 0 4px 0", fontSize: "1.2em" }}
+                  >
+                    {option.icon}
+                  </OptionIcon>
+                  {/* Այստեղ նույնպես միացված է մեկ տեղում */}
+                  <OptionLabel
+                    style={{
+                      display: "block",
+                      whiteSpace: "normal",
+                      textAlign: "center",
+                      width: "100%",
+                      fontSize: "0.95em",
+                      lineHeight: "1.3",
+                      margin: 0,
+                    }}
+                  >
+                    {option.label}
+                    <br />
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "0.8em",
+                        opacity: 0.75,
+                        display: "block",
+                        marginTop: "4px",
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {option.ukLabel}
+                    </span>
+                  </OptionLabel>
+                </div>
               </OptionButton>
             ))}
           </OptionGrid>
@@ -230,9 +425,31 @@ const AttendanceGuests = () => {
 
         {/* Guest Count - Conditional */}
         {formData.attending === true && (
-          <GuestCountContainer>
-            <Label htmlFor="guestCount">
-              <h4>Հյուրերի քանակ*</h4>
+          <GuestCountContainer
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+              marginBottom: "20px",
+            }}
+          >
+            <Label
+              htmlFor="guestCount"
+              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+            >
+              <h4 style={{ margin: "0", fontSize: "1.1em" }}>
+                Հյուրերի քանակ*
+              </h4>
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "0.85em",
+                  fontWeight: "normal",
+                  opacity: 0.65,
+                }}
+              >
+                Кількість гостей*
+              </span>
             </Label>
             <div>
               <GuestCountInput
@@ -241,27 +458,157 @@ const AttendanceGuests = () => {
                 name="guestCount"
                 value={formData.guestCount}
                 onChange={handleInputChange}
+                min="1"
                 max="20"
+                placeholder="Օրինակ՝ 2 / Наприклад: 2"
+                required
+                style={{ width: "100%", padding: "12px" }}
               />
             </div>
-            <GuestCountHint>Ընդհանուր (ներառյալ դուք)</GuestCountHint>
+            <GuestCountHint
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "2px",
+                margin: "0",
+                lineHeight: "1.3",
+              }}
+            >
+              <span>Ընդհանուր (ներառյալ դուք)</span>
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "0.85em",
+                  opacity: 0.7,
+                }}
+              >
+                Всього (включаючи вас)
+              </span>
+            </GuestCountHint>
           </GuestCountContainer>
         )}
 
-        <SubmitButton type="submit" disabled={isSubmitting}>
+        {/* Comments / Wishes Field */}
+        <FormGroup
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+            marginBottom: "20px",
+          }}
+        >
+          <Label
+            htmlFor="comment"
+            style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+          >
+            <h4 style={{ margin: "0", fontSize: "1.1em" }}>
+              Ձեր մաղթանքները կամ նշումները
+            </h4>
+            <span
+              style={{
+                fontStyle: "italic",
+                fontSize: "0.85em",
+                fontWeight: "normal",
+                opacity: 0.65,
+              }}
+            >
+              Ваші побажання або примітки
+            </span>
+          </Label>
+          <TextArea
+            id="comment"
+            name="comment"
+            value={formData.comment}
+            onChange={handleInputChange}
+            placeholder="Գրեք այստեղ... / Напишіть тут..."
+            rows="3"
+            style={{ width: "100%", padding: "12px", resize: "none" }}
+          />
+        </FormGroup>
+
+        <SubmitButton
+          type="submit"
+          disabled={isSubmitting}
+          style={{
+            height: "auto",
+            padding: "16px 12px",
+            marginTop: "12px",
+            width: "100%",
+          }}
+        >
           {isSubmitting ? (
-            <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
               <SpinnerIcon />
-              <span className="hidden sm:inline">Ուղարկվում է...</span>
-              <span className="sm:hidden">Ուղարկում...</span>
-            </>
+              <span style={{ fontSize: "1.05em" }}>Ուղարկվում է...</span>
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "0.8em",
+                  opacity: 0.8,
+                  fontWeight: "normal",
+                }}
+              >
+                Надсилається...
+              </span>
+            </div>
           ) : (
-            <span>Ուղարկել</span>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <span style={{ fontWeight: "bold", fontSize: "1.1em" }}>
+                Ուղարկել
+              </span>
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "0.85em",
+                  opacity: 0.8,
+                  fontWeight: "normal",
+                }}
+              >
+                Надіслати
+              </span>
+            </div>
           )}
         </SubmitButton>
 
         {/* Footer Info */}
-        <FooterText>Ձեր տվյալները շատ կարևոր են մեզ համար</FooterText>
+        <FooterText
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "4px",
+            marginTop: "24px",
+            textAlign: "center",
+          }}
+        >
+          <span style={{ fontSize: "0.95em" }}>
+            Ձեր տվյալները շատ կարևոր են մեզ համար
+          </span>
+          <span
+            style={{
+              fontStyle: "italic",
+              fontSize: "0.85em",
+              opacity: 0.7,
+              fontWeight: "normal",
+            }}
+          >
+            Ваші дані дуже важливі для нас
+          </span>
+        </FooterText>
       </Form>
     </Wrapper>
   );
