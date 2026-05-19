@@ -27,10 +27,10 @@ const FirstPagePartContext = styled.div`
     justify-content: center;
     align-items: center;
     p {
-      font-size: 16px;
+      font-size: 22px;
     }
     h3 {
-      font-size: 35px;
+      font-size: 45px;
     }
   }
   h2 {

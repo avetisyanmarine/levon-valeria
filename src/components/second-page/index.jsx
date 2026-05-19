@@ -11,7 +11,7 @@ import LineAes from "../../assets/image/lineaes.png";
 import { ThirdPagePartCalendar } from "../third-page/styled";
 
 export const SecondPage = () => {
-  const weddingDate = new Date(2026, 5, 5, 0, 0, 0);
+  const weddingDate = new Date(2026, 7, 8, 0, 0, 0);
 
   const calculateTimeLeft = () => {
     const now = new Date();
@@ -88,8 +88,7 @@ export const SecondPage = () => {
         >
           <img src={BlockImage} className="mt-[6px] grayscale" alt="" />
           <p className="font-[600]">
-            Սերը հանդուրժող է, <br />
-            սերը բարի է<p className="mt-4">— Ա Կորնթացիներ 13:4</p>
+            Ціле життя плюс <br /> ціла вічність{" "}
           </p>
         </div>
       </Container>
@@ -98,18 +97,18 @@ export const SecondPage = () => {
           <div>
             <img src={Photo2} className="h-[100vh]" />
           </div>
-          <div className="flex flex-col gap-2 grayscale">
+          <div className="flex flex-col gap-2">
             <img src={PhotoGroup1} alt="" className="h-1/3 object-cover" />
             <img src={PhotoGroup2} alt="" className="h-1/3 object-cover" />
             <img src={PhotoGroup3} alt="" className="h-1/3 object-cover" />
           </div>
         </div>
         <div className="mt-10 mb-7">
-          <h2 className="mb-10">Սիրելի հյուրեր</h2>
+          <h2 style={{fontSize: "49px"}} className="mb-5">Любі гості</h2>
           <Flexible className="font-[600]">
-            <p>
-              Սիրով հրավիրում ենք Ձեզ ներկա գտնվելու մեր հարսանյաց հանդիսությանը
-              և կիսելու մեր ուրախությունը։
+            <p className="text-[20px]">
+              Ми з любов’ю запрошуємо Вас бути присутніми на нашому весільному
+              святі та розділити з нами нашу радість.
             </p>
           </Flexible>
         </div>
@@ -117,7 +116,7 @@ export const SecondPage = () => {
       <img src={LineAes} alt="" className="w-full" />
       <Container>
         <h2 className="mt-5" data-aos="zoom-in">
-          Հունիս
+          Օգոստոս
         </h2>
         <ThirdPagePartCalendar
           data-aos="fade-up"
@@ -134,14 +133,18 @@ export const SecondPage = () => {
             </div>
           ))}
           {[...Array(37)].map((_, i) =>
-            i > -1 && i <= 29 ? (
-              <div className={i + 1 == 5 ? "special" : ""}>{i + 1}</div>
+            i > 4 && i <= 35 ? (
+              <div className={i - 4 == 8 ? "special" : ""}>{i - 4}</div>
             ) : (
               <div className=""></div>
             ),
           )}
         </ThirdPagePartCalendar>
-        <img src={PhotoF1} alt="" className="grayscale rounded-[15px] mt-[50px]" />
+        <img
+          src={PhotoF1}
+          alt=""
+          className="rounded-[15px] mt-[50px]"
+        />
       </Container>
     </SecondPagePart>
   );

@@ -8,10 +8,10 @@ export const FirstPage = () => {
       <img className="grayscale" src={MainPhoto} />
       <Container>
         <FirstPagePartContext>
-          <div className="mt-19 text-[#2D2929] maintext">
-            <p>Հարսանյաց Հրավեր</p>
-            <h3>Արման & Նունե</h3>
-            <p>05.06.2026</p>
+          <div className="mt-125 text-[#cdcaca] maintext">
+            <p>Wedding Day</p>
+            <h3>Levon & Valeria</h3>
+            <p>08.08.2026</p>
           </div>
         </FirstPagePartContext>
       </Container>
