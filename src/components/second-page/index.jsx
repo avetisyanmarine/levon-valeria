@@ -104,11 +104,24 @@ export const SecondPage = () => {
           </div>
         </div>
         <div className="mt-10 mb-7">
-          <h2 style={{fontSize: "49px"}} className="mb-5">Любі гості</h2>
+          <h2 style={{ fontSize: "49px" }} className="mb-5">
+            Любі гості
+          </h2>
           <Flexible className="font-[600]">
             <p className="text-[20px]">
               Ми з любов’ю запрошуємо Вас бути присутніми на нашому весільному
               святі та розділити з нами нашу радість.
+            </p>
+          </Flexible>
+          <hr className="my-5" />
+          <h2 style={{ fontSize: "32px" }} className="mb-5">
+            Սիրելի հյուրեր
+          </h2>
+
+          <Flexible className="font-[600]">
+            <p className="text-[18px]">
+              Սիրով հրավիրում ենք Ձեզ ներկա գտնվելու մեր հարսանեկան տոնին և մեզ
+              հետ կիսելու մեր կյանքի այս գեղեցիկ ու ուրախ օրը։
             </p>
           </Flexible>
         </div>
@@ -140,11 +153,7 @@ export const SecondPage = () => {
             ),
           )}
         </ThirdPagePartCalendar>
-        <img
-          src={PhotoF1}
-          alt=""
-          className="rounded-[15px] mt-[50px]"
-        />
+        <img src={PhotoF1} alt="" className="rounded-[15px] mt-[50px]" />
       </Container>
     </SecondPagePart>
   );
