@@ -108,7 +108,7 @@ const AttendanceGuests = () => {
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbwbQ7To6idHky7c5YUBfvZGofeNhLptVFK5C-N8oRU6SEZdSBp3_RTwlNBuctC6LIGUsA/exec",
+        "https://script.google.com/macros/s/AKfycbzwa5Hvyg-5KT_a2129LgCNO3xdKfs3JNUnfs2brQmcf98HDO0t7ZfgAm-FVQYT49QAmQ/exec",
         {
           method: "POST",
           mode: "no-cors",
@@ -487,44 +487,6 @@ const AttendanceGuests = () => {
             </GuestCountHint>
           </GuestCountContainer>
         )}
-
-        {/* Comments / Wishes Field */}
-        <FormGroup
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
-            marginBottom: "20px",
-          }}
-        >
-          <Label
-            htmlFor="comment"
-            style={{ display: "flex", flexDirection: "column", gap: "2px" }}
-          >
-            <h4 style={{ margin: "0", fontSize: "1.1em" }}>
-              Ձեր մաղթանքները կամ նշումները
-            </h4>
-            <span
-              style={{
-                fontStyle: "italic",
-                fontSize: "0.85em",
-                fontWeight: "normal",
-                opacity: 0.65,
-              }}
-            >
-              Ваші побажання або примітки
-            </span>
-          </Label>
-          <TextArea
-            id="comment"
-            name="comment"
-            value={formData.comment}
-            onChange={handleInputChange}
-            placeholder="Գրեք այստեղ... / Напишіть тут..."
-            rows="3"
-            style={{ width: "100%", padding: "12px", resize: "none" }}
-          />
-        </FormGroup>
 
         <SubmitButton
           type="submit"
